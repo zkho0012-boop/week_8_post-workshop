@@ -96,24 +96,21 @@ void filter_ascending(struct node *startPtr, int count_nodes)
 {
     struct node* prevPtr = NULL;
     struct node* curPtr = NULL;
-    
-    if (startPtr == NULL) return; // Safety check
-
-    prevPtr = startPtr;
-    curPtr = startPtr->nextPtr;
-
-    while (curPtr != NULL)
+	prevPtr = startPtr;
+	curPtr = startPtr->nextPtr;
+    for (int i = 0; i < count_nodes; i++)
     {
-        if (prevPtr->data > curPtr->data)
+        while (curPtr != NULL)
         {
-            prevPtr->nextPtr = curPtr->nextPtr;
-            free(curPtr);
-            curPtr = prevPtr->nextPtr; // Line 1: Update curPtr to the new next node
-        }
-        else 
-        {
-            prevPtr = curPtr;           // Line 2: Move prevPtr forward only if order is correct
-            curPtr = curPtr->nextPtr;
+            if (prevPtr->data > curPtr->data)
+            {
+                prevPtr->nextPtr = curPtr->nextPtr;
+                free(curPtr);
+				curPtr = prevPtr->nextPtr;
+				continue;
+			}
+            prevPtr = prevPtr->nextPtr; 
+            curPtr = prevPtr->nextPtr;
         }
     }
 }
